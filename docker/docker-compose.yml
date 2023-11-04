@@ -1,0 +1,17 @@
+# Persons Database setup
+version: '3'
+services:
+  mysql-server:
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+    volumes:
+      - ./mysql/init:/docker-entrypoint-initdb.d
+
+networks:
+  mysql-simple-net:
+
+
+
