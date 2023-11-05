@@ -1,5 +1,5 @@
 # Spring Boot 3 Application Template
-## Libs
+## Features & Frameworks
 - MVC
 - JPA
 - MYSQL

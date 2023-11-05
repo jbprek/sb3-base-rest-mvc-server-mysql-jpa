@@ -13,16 +13,16 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/persons")
-public class MainController {
+public class ApiController {
 
     private final PersonMapper mapper;
     private final PersonEntityRepository repository;
 
     @PostMapping
-    public ResponseEntity<PersonDto> create(@RequestBody final PersonInDto dto) {
+    public ResponseEntity<PersonDto> create(@RequestBody final PersonDto dto) {
         var entity = mapper.dtoToEntity(dto);
         var resEntity = repository.save(entity);
-        return ResponseEntity.created(null).body(mapper.entityToDTO(resEntity));
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.entityToDTO(resEntity));
     }
 
     @GetMapping("/{id}")
@@ -39,14 +39,14 @@ public class MainController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<PersonDto> update(@PathVariable Long id, @RequestBody PersonInDto dto) {
+    public ResponseEntity<PersonDto> update(@PathVariable Long id, @RequestBody PersonDto dto) {
 
         var entity = repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         mapper.dtoToEntity(dto, entity);
         var updatedEntity = repository.save(entity);
-        return ResponseEntity.created(null).body(mapper.entityToDTO(updatedEntity));
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.entityToDTO(updatedEntity));
     }
 
     @DeleteMapping(path = "/{id}")
